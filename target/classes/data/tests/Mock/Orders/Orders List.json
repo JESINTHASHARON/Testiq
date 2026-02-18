@@ -1,0 +1,33 @@
+{
+  "id": 2,
+  "name": "Orders List",
+  "suite": "Mock",
+  "path": "Mock/Orders",
+  "endpoint": "orders",
+  "method": "GET",
+  "checks": [
+    {
+      "type": "fieldExistence",
+      "path": "$",
+      "fields": [
+        "orders",
+        "total"
+      ]
+    },
+    {
+      "type": "fieldExistence",
+      "path": "orders[0]",
+      "fields": [
+        "orderId",
+        "item",
+        "price"
+      ]
+    }
+  ],
+  "requires": [
+    {
+      "name": "orderId",
+      "path": "orders[0].orderId"
+    }
+  ]
+}

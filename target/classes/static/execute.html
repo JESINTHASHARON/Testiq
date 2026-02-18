@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testiq - Test Execution</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+</head>
+
+<body>
+
+<div id="jsonModal" class="json-modal">
+    <div class="json-modal-content">
+        <div class="json-modal-header">
+            <h3 id="jsonModalTitle"></h3>
+            <span id="closeJsonModal" class="close-btn">&times;</span>
+        </div>
+        <pre id="jsonModalBody" class="json-body"></pre>
+    </div>
+</div>
+
+<header class="main-header">
+    <div class="logo" onclick="goHome()">Testiq</div>
+    <div class="header-title-center">Test Executor</div>
+</header>
+
+<div class="container">
+
+    <div class="sidebar" id="available-sidebar" style="display: none;">
+        <button id="backToCSVUpload" class="sidebar-back-btn">⬅ Back</button>
+        <div class="sidebar-scroll" id="availableSidebarScroll"></div>
+    </div>
+    <div class="sidebar sidebar-collapsible" id="selected-sidebar"
+         style="display: none;">
+        <button class="sidebar-toggle-btn" onclick="toggleResultSidebar()">☰</button>
+
+        <div class="sidebar-scroll" id="selectedSidebarScroll"></div>
+    </div>
+
+    <main class="main-content">
+        <div id="progressLoader" class="progress-loader"
+             style="display: none;">
+            <div class="progress-box">
+                <div class="progress-bar-bg">
+                    <div id="progressBarFill" class="progress-bar-fill"></div>
+                </div>
+                <div id="progressPercent" class="progress-percent">0%</div>
+            </div>
+        </div>
+
+        <div id="page1">
+            <section class="upload-card">
+                <div class="upload-card-inner">
+                    <img src="/assets/images/upload.png" class="upload-icon"
+                         alt="upload">
+                    <h2 class="upload-title">Upload Your Account CSV</h2>
+                    <p class="upload-subtitle">
+                        Upload a CSV file containing your account credentials. The file
+                        should include columns for: <span>Account Name</span>, <span>Base
+								URL</span>, <span>Cookie</span>, <span>Other Headers</span>
+                    </p>
+
+                    <div class="file-input-wrapper csv-info-wrapper">
+                        <input type="file" id="csvFile" name="csvFile" accept=".csv"
+                               required>
+
+                        <div class="csv-help-wrapper">
+                            <span class="csv-help-icon" id="csvHelpIcon">i</span>
+
+                            <div class="csv-help-tooltip" id="csvHelpTooltip">
+                                <div class="tooltip-arrow"></div>
+                                <p>
+                                    Upload a CSV with these columns: <br> <br> <strong>1.
+                                    Account Name</strong> – A simple name to identify the account <br>
+                                    <strong>2. Base URL</strong> – The website/domain of that
+                                    account <br> <strong>3. Cookie</strong> – The login
+                                    cookie used for authentication <br> <strong>4.
+                                    CSRF Token</strong> – Security token, get it from Network request
+                                    headers<br> <strong>5. User Agent</strong> – Information
+                                    about the browser's capabilities <br> <br> <strong>Example
+                                    row: </strong>Account1, https://product.manageengine.in,
+                                    "JSESSIONID=XYZ;", 123-token, Mozilla/5.0 chrome/510.1.0 <br>
+                                    <br>For full details, see our <a
+                                        href="http://localhost:8080/index.html#csv-format"
+                                        target="_blank">Help Documentation</a>
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="csv-download-box">
+							<span id="downloadSampleCsv" class="csv-download-icon">📥
+								Download Template CSV</span>
+                    </div>
+
+                    <button type="button" id="verifyCookiesBtn"
+                            class="upload-btn primary-btn">Run Validation
+                    </button>
+
+                    <button type="submit" id="runTestsBtn" class="upload-btn run-btn"
+                            style="display: none;">Run Selected Tests
+                    </button>
+
+                    <div id="cookieValidationResult" class="cookie-validation-box"></div>
+
+                </div>
+
+                <div id="cookieValidationResult" class="cookie-validation-area"></div>
+                <div id="execution-time" class="execution-time"></div>
+            </section>
+            </form>
+        </div>
+
+        <div id="page2" style="display: none;">
+            <section class="page2-card">
+
+                <h2 class="page2-title">Validated Accounts</h2>
+
+                <p class="page2-note">These are the valid accounts. Please
+                    select testsuites from the left sidebar to proceed further.</p>
+
+                <p class="page2-subtitle">
+                    The following <strong id="validCount"></strong> accounts have been
+                    validated successfully.
+                </p>
+
+                <div class="validated-list" id="validatedList"></div>
+
+                <button id="goToRunTests" class="page2-run-btn">Run Tests</button>
+            </section>
+        </div>
+
+
+        <div id="page3" style="display: none;">
+            <section class="results-header" id="results-header">
+                <h2>Results Summary</h2>
+                <div class="summary-stats" id="summary-stats"></div>
+                <div class="results-summary-chart">
+                    <canvas id="summaryChart"></canvas>
+                </div>
+            </section>
+
+            <section class="results-container" id="results-container">
+                <div class="no-results">Select and run tests to view results</div>
+            </section>
+
+        </div>
+
+    </main>
+</div>
+
+<div id="sidePanelOverlay" class="side-panel-overlay"></div>
+
+<div id="sidePanel" class="side-panel">
+    <div class="side-panel-header">
+        <div id="sidePanelTitle" class="side-panel-title"></div>
+        <button id="sidePanelClose" class="side-panel-close">×</button>
+    </div>
+    <div id="sidePanelBody" class="side-panel-body"></div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

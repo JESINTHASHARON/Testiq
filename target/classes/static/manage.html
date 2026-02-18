@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testiq - Manage Test Suites</title>
+    <link rel="stylesheet" href="manage.css">
+</head>
+
+<body>
+<div class="top-nav">
+    <h1 onclick="window.location.href='index.html'"
+        style="cursor: pointer;">Testiq</h1>
+
+    <div style="font-size: 1.6rem; font-weight: 600; color: #fff;">Test
+        Suite Manager
+    </div>
+
+    <div class="nav-actions">
+        <button class="btn btn-primary"
+                onclick="window.location.href='execute.html'">Execute
+            Tests→
+        </button>
+    </div>
+</div>
+<div class="container">
+    <div class="page-header">
+        <h2>Manage Your Test Suites</h2>
+        <p>Create, edit, and organize test suites, folders, and test
+            cases</p>
+    </div>
+    <div class="content-grid">
+        <div class="sidebar-panel">
+            <div
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3>Test Suites</h3>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-primary btn-small"
+                            onclick="openCreateSuiteModal()">+ Root Suite
+                    </button>
+                    <button class="btn btn-primary btn-small"
+                            onclick="openCreateFolderModal()">+ Sub Suite
+                    </button>
+                </div>
+            </div>
+            <ul id="suiteList" class="suite-list"></ul>
+        </div>
+        <div class="main-panel">
+            <div class="panel-header">
+                <h3 id="currentSuiteTitle">Select a Suite / Folder</h3>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn btn-primary" onclick="openCreateTestcaseModal()">+ Test Case</button>
+                    <button class="btn btn-primary" onclick="openPrecheckManager()">
+                        ⚙ Prechecks
+                    </button>
+
+                </div>
+            </div>
+
+            <div id="testcaseContainer"></div>
+        </div>
+    </div>
+</div>
+
+<div id="suiteModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="suiteModalTitle">Create New Test Suite</h3>
+            <button class="close-btn" onclick="closeSuiteModal()">×</button>
+        </div>
+
+        <form id="suiteForm">
+            <div class="form-group">
+                <label>Suite Name</label> <input type="text" id="suiteName"
+                                                 placeholder="e.g., Home_Page" required>
+            </div>
+
+            <div class="action-buttons">
+                <button type="button" class="btn btn-cancel"
+                        onclick="closeSuiteModal()">Cancel
+                </button>
+                <button type="submit" class="btn btn-save">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="folderModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="folderModalTitle">Create SubSuite</h3>
+            <button class="close-btn" onclick="closeFolderModal()">×</button>
+        </div>
+
+        <form id="folderForm">
+            <div class="form-group">
+                <label>Folder Name</label> <input type="text" id="folderName"
+                                                  placeholder="e.g., Orders Details" required>
+            </div>
+
+            <p style="font-size: 0.85rem; color: #718096; margin-bottom: 10px;">
+                A Subsuite will be created inside the currently selected suite/folder.
+            </p>
+
+            <div class="action-buttons">
+                <button type="button" class="btn btn-cancel"
+                        onclick="closeFolderModal()">Cancel
+                </button>
+                <button type="submit" class="btn btn-save">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="testcaseModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="testcaseModalTitle">Create New Test Case</h3>
+            <button class="close-btn" onclick="closeTestcaseModal()">×</button>
+        </div>
+        <form id="testcaseForm">
+            <div class="form-group">
+                <label>ID</label> <input type="number" id="testcaseId" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Test Case Name</label> <input type="text" id="testcaseName"
+                                                     placeholder="e.g., Check Home Page" required>
+            </div>
+
+            <div class="form-group">
+                <label>Endpoint</label> <input type="text" id="testcaseEndpoint"
+                                               placeholder="e.g., endpoint/api/order/{orderId}/metadata"
+                                               required>
+            </div>
+
+            <div class="form-group">
+                <label>HTTP Method</label> <select id="testcaseMethod">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">DELETE</option>
+                <option value="PATCH">PATCH</option>
+            </select>
+            </div>
+
+            <div class="form-group">
+                <label>Expected Status</label> <input type="number"
+                                                      id="testcaseStatus" value="200">
+            </div>
+            <hr>
+
+            <div class="form-group">
+                <label>Parent Tests (optional)</label>
+                <div id="parentListContainer" class="group-container"></div>
+                <p style="font-size: 0.8rem; color: #718096; margin-top: 4px;">
+                    Only root-level parents shown.</p>
+            </div>
+            <hr>
+            <div id="requiresSection" style="display: none; margin-top: 10px;">
+                <h3>Requires</h3>
+                <div id="requiresList" style="margin: 10px 0;"></div>
+                <div
+                        style="display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 15px;">
+                    <div style="flex: 1; min-width: 180px;">
+                        <label style="font-size: 0.85rem; color: #4a5568;">Name</label> <input
+                            type="text" id="requireName" placeholder="e.g., resourceId">
+                    </div>
+                    <div style="flex: 1; min-width: 220px;">
+                        <label style="font-size: 0.85rem; color: #4a5568;">Path</label> <input
+                            type="text" id="requirePath"
+                            placeholder="e.g., data[0].cells[0].payload.resourceId">
+                    </div>
+                    <button type="button" class="btn btn-primary btn-small"
+                            onclick="addRequireEntry()" style="margin-bottom: 3px;">
+                        + Add Require
+                    </button>
+                </div>
+            </div>
+            <hr>
+
+
+            <div class="form-group">
+                <label>Precheck (optional)</label>
+                <select id="testcasePrecheck">
+                    <option value="">None</option>
+                </select>
+                <p style="font-size:0.8rem;color:#718096;">
+                    Testcase runs only if precheck passes
+                </p>
+            </div>
+
+            <h3>Checks</h3>
+            <div class="form-group">
+                <select id="checkTypeSelect" onchange="renderCheckInputs()">
+                    <option value="">Select Check Type</option>
+                    <option value="patternMatch">Pattern Match</option>
+                    <option value="keyValue">Key Presence Validation</option>
+                    <option value="fieldExistence">Field Existence Check</option>
+                    <option value="valueMatch">Value Match</option>
+                </select>
+            </div>
+
+            <div id="checkInputContainer"></div>
+            <button type="button" class="btn btn-primary btn-small"
+                    onclick="addCheck()">+ Add Check
+            </button>
+            <div id="testcaseErrorMsg"
+                 style="display: none; color: #dc2626; background: #fee2e2; padding: 10px 12px; border-left: 4px solid #dc2626; border-radius: 6px; margin-bottom: 12px; font-size: 14px;">
+            </div>
+            <div id="addedChecksList" style="margin-top: 10px;"></div>
+            <div class="action-buttons">
+                <button type="button" class="btn btn-cancel"
+                        onclick="closeTestcaseModal()">Cancel
+                </button>
+                <button type="submit" class="btn btn-save">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="helpModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Check Format Help</h3>
+            <button class="close-btn" onclick="closeHelpModal()">×</button>
+        </div>
+        <p>Path format guidance… (JSON structure preview, etc.)</p>
+    </div>
+</div>
+<div id="precheckModal" class="modal">
+    <div class="modal-content" style="max-width:700px;">
+        <div class="modal-header">
+            <h3 id="precheckModalTitle">Manage Prechecks</h3>
+            <button class="close-btn" onclick="closePrecheckModal()">×</button>
+        </div>
+
+        <div style="display:flex; gap:12px;">
+
+            <div style="width:35%; border-right:1px solid #e2e8f0; padding-right:10px;">
+                <button class="btn btn-primary btn-small" onclick="createNewPrecheck()">+ New</button>
+                <ul id="precheckList" style="margin-top:10px;"></ul>
+            </div>
+
+            <div style="flex:1;">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input id="pc_name" placeholder="e.g. Zero Devices"/>
+                </div>
+
+                <div class="form-group">
+                    <label>Endpoint</label>
+                    <input id="pc_endpoint" placeholder="e.g. endpoint/api/users">
+                </div>
+
+                <div class="form-group">
+                    <label>Method</label>
+                    <select id="pc_method">
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Condition Type</label>
+                    <select id="pc_mode" onchange="renderPrecheckConditions()">
+                        <option value="single">Single Condition</option>
+                        <option value="multi">Multiple Conditions</option>
+                    </select>
+                </div>
+
+                <div id="pc_single_block">
+                    <input id="pc_path" placeholder="Path (e.g. data.count)">
+
+                    <select id="pc_operator">
+                        <option value="==">Equals</option>
+                        <option value="!=">Not Equals</option>
+                        <option value=">">Greater Than</option>
+                        <option value="<">Less Than</option>
+                        <option value=">=">Greater Or Equal</option>
+                        <option value="<=">Less Or Equal</option>
+                        <option value="contains">Contains</option>
+                        <option value="notContains">Not Contains</option>
+                        <option value="startsWith">Starts With</option>
+                        <option value="endsWith">Ends With</option>
+                    </select>
+
+                    <input id="pc_value" placeholder="Expected value">
+                </div>
+
+                <div id="pc_multi_block" style="display:none;">
+                    <select id="pc_logic">
+                        <option value="AND">AND</option>
+                        <option value="OR">OR</option>
+                    </select>
+
+                    <div id="pc_conditions" style="margin-top:8px;"></div>
+
+                    <button class="btn btn-small btn-primary"
+                            onclick="addPrecheckCondition()">
+                        + Add Condition
+                    </button>
+                </div>
+
+                <div class="action-buttons" style="margin-top:12px;">
+                    <button class="btn btn-save" onclick="savePrecheck()">Save</button>
+                    <button class="btn btn-cancel" onclick="deletePrecheck()">Delete</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="manage.js"></script>
+</body>
+
+</html>

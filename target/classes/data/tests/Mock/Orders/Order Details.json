@@ -1,0 +1,32 @@
+{
+  "id": 3,
+  "name": "Order Details",
+  "suite": "Mock",
+  "path": "Mock/Orders",
+  "parentId": 2,
+  "endpoint": "orders/{orderId}",
+  "method": "GET",
+  "checks": [
+    {
+      "type": "fieldExistence",
+      "path": "$",
+      "fields": [
+        "orderId",
+        "item",
+        "price",
+        "status",
+        "deliveryDate"
+      ]
+    },
+    {
+      "type": "valueMatch",
+      "path": "orderId",
+      "expectedType": "string"
+    }
+  ],
+  "requires": [
+    {
+      "name": "orderId"
+    }
+  ]
+}

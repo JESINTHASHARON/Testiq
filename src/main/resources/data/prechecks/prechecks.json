@@ -1,0 +1,16 @@
+{
+  "Zero Devices": {
+    "endpoint": "intelligence/api/addon",
+    "method": "GET",
+    "extractPath": "totalDevicesCount",
+    "operator": "==",
+    "value": "0"
+  },
+  "Has Devices": {
+    "endpoint": "intelligence/api/addon",
+    "method": "GET",
+    "extractPath": "totalDevicesCount",
+    "operator": ">",
+    "value": "0"
+  }
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testiq - Results</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+</head>
+
+<body>
+<header class="main-header">
+    <div class="logo" onclick="goHome()">Testiq</div>
+
+    <div class="header-title-center">Test Results</div>
+
+    <div class="header-right">
+        <span id="runIdLabel" class="run-id-label"></span>
+        <button class="back-btn" onclick="goBackToResults()">⬅ Back</button>
+    </div>
+
+</header>
+
+<div class="container">
+
+    <div class="sidebar sidebar-collapsible" id="selected-sidebar"
+         style="display: block;">
+        <button class="sidebar-toggle-btn" onclick="toggleResultSidebar()">☰</button>
+        <div class="sidebar-scroll" id="selectedSidebarScroll"></div>
+    </div>
+
+    <main class="main-content">
+        <section id="page3" style="display: block;">
+            <section class="results-header" id="results-header"
+                     style="display: none;"></section>
+
+            <section class="results-container" id="results-container">
+                <div class="no-results">Loading Results...</div>
+            </section>
+        </section>
+    </main>
+
+</div>
+
+<div id="sidePanelOverlay" class="side-panel-overlay"></div>
+
+<div id="sidePanel" class="side-panel">
+    <div class="side-panel-header">
+        <div id="sidePanelTitle" class="side-panel-title"></div>
+        <button id="sidePanelClose" class="side-panel-close">×</button>
+    </div>
+    <div id="sidePanelBody" class="side-panel-body"></div>
+</div>
+
+<div id="jsonModal" class="json-modal">
+    <div class="json-modal-content">
+        <div class="json-modal-header">
+            <h3 id="jsonModalTitle"></h3>
+            <span id="closeJsonModal" class="close-btn">&times;</span>
+        </div>
+        <pre id="jsonModalBody" class="json-body"></pre>
+    </div>
+</div>
+<script src="script.js"></script>
+<script>
+    window.onload = async () => {
+
+        const params = new URLSearchParams(window.location.search);
+        const runId = params.get("runId");
+
+        if (runId) {
+            document.getElementById("runIdLabel").textContent = `(Run ID: ${runId})`;
+        }
+
+        if (!runId) {
+            document.getElementById("results-container").innerHTML =
+                "<div class='no-results'>No runId provided.</div>";
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/results/runs/${runId}`);
+            const data = await response.json();
+
+            backendOutput = data;
+
+            selectedTests = [];
+            if (backendOutput && backendOutput.suites) {
+                Object.keys(backendOutput.suites).forEach(key => {
+                    const [agent, test] = key.split("-");
+                    selectedTests.push({ agent, test });
+                });
+            }
+
+            renderSelectedSidebar();
+            renderOverallDashboardFromBackend();
+
+        } catch (err) {
+            document.getElementById("results-container").innerHTML =
+                "<div class='no-results'>Failed to load results.</div>";
+        }
+    };
+</script>
+</body>
+</html>

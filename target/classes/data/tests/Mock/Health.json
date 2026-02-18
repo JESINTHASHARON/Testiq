@@ -1,0 +1,24 @@
+{
+  "id": 1,
+  "name": "Health",
+  "suite": "Mock",
+  "path": "Mock",
+  "endpoint": "health",
+  "method": "GET",
+  "checks": [
+    {
+      "type": "fieldExistence",
+      "path": "$",
+      "fields": [
+        "status",
+        "service"
+      ]
+    },
+    {
+      "type": "valueMatch",
+      "path": "status",
+      "operator": "==",
+      "expected": "UP"
+    }
+  ]
+}

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testiq - Home</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+<header class="main-header">
+    <div class="logo" onclick="window.location.href='index.html'">Testiq</div>
+    <nav class="nav-links">
+        <a href="#home" class="nav-item active" onclick="showHome()">Home</a> <a
+            href="#result" class="nav-item" onclick="showResults()">Results</a> <a
+            href="#help" class="nav-item" onclick="showHelp()">Help</a>
+    </nav>
+</header>
+
+<div class="home-container">
+
+    <div class="header">
+        <h1>Automated Test Tool</h1>
+        <p>Execute & Manage Tests Seamlessly</p>
+    </div>
+
+    <div class="cards-container">
+
+
+        <div class="option-card" id="manageCard">
+            <span class="card-icon"></span>
+            <h2 class="card-title">Manage Test Suites</h2>
+            <p class="card-description">Create, edit & organize test suites</p>
+
+            <ul class="card-features">
+                <li>Create test suites</li>
+                <li>Edit test cases</li>
+                <li>Select Validation rules</li>
+                <li>Organize structure</li>
+                <li>Delete unnecessary Test-suites/Testcases</li>
+            </ul>
+
+            <button class="card-button" onclick="navigateToManage()">
+                Manage Suites →
+            </button>
+        </div>
+
+        <div class="option-card" id="executeCard">
+            <span class="card-icon"></span>
+            <h2 class="card-title">Execute Tests</h2>
+            <p class="card-description">Upload CSV and run automated test
+                suites</p>
+
+            <ul class="card-features">
+                <li>Upload CSV with test data</li>
+                <li>Select multiple test suites</li>
+                <li>Live test execution</li>
+                <li>Result analysis</li>
+                <li>Export report</li>
+            </ul>
+
+            <button class="card-button" id="startTestingBtn" onclick="navigateToExecute()">
+                Start Testing →
+            </button>
+        </div>
+
+    </div>
+
+    <div class="footer"></div>
+
+</div>
+
+<div id="helpSection">
+    <div class="help-layout">
+
+        <aside class="help-sidebar">
+            <h3>Quick Navigation</h3>
+            <ul class="help-nav">
+                <li><a href="#overview" onclick="scrollToSection('overview')">Overview</a></li>
+                <li><a href="#terminology"
+                       onclick="scrollToSection('terminology')">Key Terms</a></li>
+                <li><a href="#csv-format"
+                       onclick="scrollToSection('csv-format')">CSV Format</a></li>
+                <li><a href="#get-credentials"
+                       onclick="scrollToSection('get-credentials')">Get Credentials</a></li>
+                <li><a href="#execute-tests"
+                       onclick="scrollToSection('execute-tests')">Execute Tests</a></li>
+                <li><a href="#manage-suites"
+                       onclick="scrollToSection('manage-suites')">Manage Suites</a></li>
+                <li><a href="#check-types"
+                       onclick="scrollToSection('check-types')">Check Types</a></li>
+                <li><a href="#path-field-guide"
+                       onclick="scrollToSection('path-field-guide')">Testcase Fields</a></li>
+                <li><a href="#multi-level"
+                       onclick="scrollToSection('multi-level')">Multi-level Test
+                    Organization</a></li>
+                <li><a href="#test-order"
+                       onclick="scrollToSection('test-order')">Testsuite & Testcase
+                    Ordering</a></li>
+
+
+                <li><a href="#errors" onclick="scrollToSection('errors')">Common
+                    Errors</a></li>
+            </ul>
+        </aside>
+
+        <main class="help-main">
+            <h1 class="help-title">Help & Documentation</h1>
+            <p class="help-subtitle">Complete guide to using Testiq
+                Automated Test Tool</p>
+
+            <section id="overview" class="content-block">
+                <h2 class="block-title">
+                    <span class="block-icon"></span> Overview
+                </h2>
+                <div class="alert alert-info">
+                    <span class="alert-icon">ℹ️</span>
+                    <div>Testiq validates account details against predefined
+                        test cases. Execute tests using existing suites or create custom
+                        test suites with validation rules.
+                    </div>
+                </div>
+            </section>
+
+            <section id="terminology" class="content-block">
+                <h2 class="block-title">
+                    <span class="block-icon"></span> Key Terminology
+                </h2>
+
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>Term</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr>
+                        <td><strong>Test Suite</strong></td>
+                        <td>Collection of related test cases grouped together</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Test Case</strong></td>
+                        <td>Single validation unit that determines pass/fail status</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Checks</strong></td>
+                        <td>Testing logic within test cases (one or more per case)</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="csv-format" class="content-block">
+                <h2 class="block-title">
+                    <span class="block-icon"></span> CSV File Format
+                </h2>
+
+                <div class="alert alert-warning">
+                    <span class="alert-icon">⚠️</span>
+                    <div>
+                        <strong>Required:</strong> Your CSV must have exactly 5 columns
+                        with a header row. All fields are mandatory.
+                    </div>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>Column Name</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>Account Name</strong></td>
+                        <td>Any descriptive name for the account</td>
+                        <td>Production_Account_01</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Base URL</strong></td>
+                        <td>The one which wont change for each APIs</td>
+                        <td>https://example.com/</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cookie</strong></td>
+                        <td>Session cookie from logged-in account</td>
+                        <td>JSESSIONID=ABC123...</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CSRF Token <br>(if applicable)</strong></td>
+                        <td>CSRF token from logged-in account</td>
+                        <td>xyz789abc456...</td>
+                    </tr>
+                    <tr>
+                        <td><strong>User Agent<br>(if applicable)</strong></td>
+                        <td>Browser User-Agent string captured from request headers</td>
+                        <td>Mozilla/5.0 (Windows NT 10.0; Win64; x64)...</td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+                <p>Note: After Account Name, Base Url, Cookie, Add any headers that are necessary</p>
+                <div class="image-placeholder">
+                    <img src="/assets/images/csv.png"
+                         alt="Example CSV file">
+                </div>
+            </section>
+
+            <br>
+
+            <section id="get-credentials" class="content-block">
+                <h2 class="block-title">
+                    <span class="block-icon"></span> How to Get Credentials
+                </h2>
+
+                <ol class="step-list">
+                    <li>Log in to your required website account</li>
+                    <li>Open Browser Developer Tools (Press <strong>F12</strong>)
+                    </li>
+                    <li>Navigate to the <strong>Network</strong> tab
+                    </li>
+                    <li>Refresh the page or perform any action</li>
+                    <li>Click on any network request from the list</li>
+                    <li>Look for <strong>Request Headers</strong> section
+                    </li>
+                    <li>Copy the <strong>Cookie</strong> header value
+                    </li>
+                    <li>Copy the <strong>X-ZCSRF-TOKEN</strong> header value if required
+                    </li>
+                    </li>
+                    <li>Copy the <strong>User-Agent</strong> header value if required
+                    </li>
+                </ol>
+            </section>
+
+            <div class="image-placeholder">
+                <img src="/assets/images/network_tab_screenshot.png"
+                     alt="Browser DevTools Network Tab Screenshot">
+            </div>
+
+            <section id="execute-tests" class="content-block">
+                <h2 class="block-title">
+                    <span class="block-icon"></span> Executing Tests
+                </h2>
+
+                <ol class="step-list">
+                    <li>Navigate to <strong>Execute Tests</strong> page
+                    </li>
+                    <li>Click <strong>Upload CSV</strong> and select your
+                        prepared file
+                    </li>
+                    <li>Select one or more test suites from the list</li>
+                    <li>Click <strong>Run Tests</strong> to begin execution
+                    </li>
+                    <li>Monitor live execution logs and real-time progress</li>
+                    <li>View overall summary and account-level results and
+                        test-suite level summary
+                    </li>
+                    <li>Download reports in PDF format</li>
+                </ol>
+                <div class="image-placeholder">
+                    <img src="/assets/images/upload_csv.png" alt="Upload CSV">
+                </div>
+
+                <div class="image-placeholder">
+                    <img src="/assets/images/test_executor.png"
+                         alt="Test Execution Interface">
+                </div>
+
+
+            </section>
+
+            <section id="manage-suites" class="content-block">
+                <h2 class="block-title">
+                    <span class="block-icon"></span> Managing Test Suites
+                </h2>
+
+                <div class="card-grid">
+                    <div class="info-card">
+                        <h4>Create Suite</h4>
+                        <p>
+                            Click <strong>+ Suite</strong> button → Select or create group →
+                            Name your suite → Save
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Add Test Case</h4>
+                        <p>
+                            Select suite → Click <strong>+ Add Test Case</strong> → Enter
+                            name & endpoint → Add checks → Save
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Edit/Delete</h4>
+                        <p>Browse existing suites → Click edit or delete icons →
+                            Modify as needed → Confirm changes</p>
+                    </div>
+
+                </div>
+
+                <h3 style="margin-top: 25px; margin-bottom: 15px; color: #1a202c;">Endpoint
+                    Configuration</h3>
+
+                <div class="alert alert-info">
+                    <span class="alert-icon">💡</span>
+                    <div>
+                        <strong>Example:</strong><br> Full URL:
+                        <code>https://example.com/api/common/meta</code>
+                        <br> Base URL:
+                        <code>https://example.com/</code>
+                        <br> Endpoint to provide:
+                        <code>api/common/meta</code>
+                    </div>
+                </div>
+
+                <table class="data-table" style="margin-top: 20px;">
+                    <thead>
+                    <tr>
+                        <th>Step</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1. Test Case Name</td>
+                        <td>Enter descriptive name for the test</td>
+                    </tr>
+                    <tr>
+                        <td>2. Endpoint</td>
+                        <td>Provide API path after base URL</td>
+                    </tr>
+                    <tr>
+                        <td>3. Status Code</td>
+                        <td>Select expected HTTP status (200, 404, 500, etc.)</td>
+                    </tr>
+                    <tr>
+                        <td>4. Add Checks</td>
+                        <td>Choose check type and configure parameters</td>
+                    </tr>
+                    <tr>
+                        <td>5. Select Parent, Add Requires</td>
+                        <td>Select a parent and give the path to extract the fields child requires</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="image-placeholder">
+                    <img src="/assets/images/testcase_editor.png"
+                         alt="Testcase Editor">
+                </div>
+
+            </section>
+
+            <section id="check-types" class="content-block">
+                <h2 class="block-title">
+                    <span class="block-icon"></span> Check Types
+                </h2>
+
+                <div class="card-grid">
+                    <div class="info-card">
+                        <h4>Pattern Match</h4>
+                        <p>Validates whether a given pattern is present for the
+                            target variable using regular expressions.</p>
+                        <p class="required">Required: Path, Regex Pattern</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Key Presence Validator</h4>
+                        <p>Checks if a specific element is present at the given path
+                            in the response.</p>
+                        <p class="required">Required: Path only</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Field Existence</h4>
+                        <p>Verifies if specified fields are present at the given path
+                            location.</p>
+                        <p class="required">
+                            Required: Path, Fields<br>Optional: fieldsAny
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Value Match</h4>
+                        <p>Validates the response value at the specified path using
+                            flexible comparison rules.</p>
+                        <p class="required">
+                            Required: Path, Expected Value(s)<br> Optional: Operator,
+                            Logic, Expected Type
+                        </p>
+
+                    </div>
+                </div>
+
+
+                <section id="path-field-guide" class="content-block">
+                    <h2 class="block-title">
+                        <span class="block-icon"></span> Understanding Path, Field,
+                        Expected & fieldAny
+                    </h2>
+
+                    <p style="font-size: 15px; color: #4a5568; line-height: 1.7;">
+                        When creating test cases, you will enter values like <strong>Path</strong>,
+                        <strong>Fields</strong>, <strong>Expected</strong>, and <strong>fieldAny</strong>.
+                        Here's a simple explanation of what each one means.
+                    </p>
+
+                    <div class="info-card"
+                         style="padding: 18px; border-left: 4px solid #3182ce;">
+                        <h3 style="margin-bottom: 8px;">1. Path</h3>
+                        <p style="color: #4a5568;">
+                            The <strong>path</strong> tells the system where exactly to look
+                            inside the API JSON response. It works like giving directions:
+                            “Go inside this object → inside this array → pick this item →
+                            read this field.”
+                        </p>
+                        <p style="margin-top: 8px;">
+                            <strong>Example:</strong>
+                        </p>
+                        <pre
+                                style="white-space: pre-wrap; color: black; background: #f8fafc; padding: 10px;">
+Path: data.items[0].id
+Meaning: Inside "data" → open "items" → pick first item → read "id"
+			</pre>
+                    </div>
+
+                    <div class="info-card"
+                         style="padding: 18px; border-left: 4px solid #38a169; margin-top: 20px;">
+                        <h3 style="margin-bottom: 8px;">2. Fields</h3>
+                        <p style="color: #4a5568;">
+                            <strong>Fields</strong> are a list of keys that MUST exist at
+                            the given path. If even one is missing, the check fails.
+                        </p>
+                        <p style="margin-top: 8px;">
+                            <strong>Example:</strong>
+                        </p>
+                        <pre
+                                style="white-space: pre-wrap; color: black; background: #f8fafc; padding: 10px;">
+Fields: name, icon, displayName
+Meaning: All 3 fields must be present at the specified path.
+			</pre>
+                    </div>
+
+                    <div class="info-card"
+                         style="padding: 18px; border-left: 4px solid #805ad5; margin-top: 20px;">
+                        <h3 style="margin-bottom: 8px;">3. Expected</h3>
+                        <p style="color: #4a5568;">
+                            <strong>Expected</strong> is the value you want to compare with
+                            the actual API response. This can be a number, text, boolean, or
+                            even full JSON.
+                        </p>
+                        <p style="margin-top: 8px;">
+                            <strong>Example:</strong>
+                        </p>
+                        <pre
+                                style="white-space: pre-wrap; color: black; background: #f8fafc; padding: 10px;">
+Path: status.code
+Expected: 200
+Meaning: The value at "status.code" must be exactly 200.
+			</pre>
+                    </div>
+
+                    <div class="info-card"
+                         style="padding: 18px; border-left: 4px solid #dd6b20; margin-top: 20px;">
+                        <h3 style="margin-bottom: 8px;">4. fieldAny</h3>
+                        <p style="color: #4a5568;">
+                            <strong>fieldAny</strong> is a list of optional fields. At least
+                            <strong>ONE</strong> of them must exist for the test to pass.
+                        </p>
+                        <p style="margin-top: 8px;">
+                            <strong>Example:</strong>
+                        </p>
+                        <pre
+                                style="white-space: pre-wrap; color: black; background: #f8fafc; padding: 10px;">
+fieldAny: email, phoneNumber
+Meaning: At least one of these fields must exist.
+			</pre>
+                    </div>
+                    <div class="info-card"
+                         style="padding: 18px; border-left: 4px solid #2b6cb0; margin-top: 20px;">
+                        <h3 style="margin-bottom: 8px;">5. Operator</h3>
+                        <p style="color: #4a5568;">Defines how the actual value
+                            should be compared with the expected value.</p>
+                        <pre
+                                style="white-space: pre-wrap; color: black; background: #f8fafc; padding: 10px;">
+Example Operators:
+== (Equal), != (Not Equal), >, <, >=, <=,
+CONTAINS, NOTCONTAINS, STARTSWITH, ENDSWITH
+    </pre>
+                    </div>
+
+                    <div class="info-card"
+                         style="padding: 18px; border-left: 4px solid #c05621; margin-top: 20px;">
+                        <h3 style="margin-bottom: 8px;">6. Logic</h3>
+                        <p style="color: #4a5568;">Used when multiple expected values
+                            are given. Determines how checks are evaluated.</p>
+                        <pre
+                                style="white-space: pre-wrap; color: black; background: #f8fafc; padding: 10px;">
+AND → All expected values must match
+OR  → Any one match is enough
+    </pre>
+                    </div>
+
+                    <div class="info-card"
+                         style="padding: 18px; border-left: 4px solid #6b46c1; margin-top: 20px;">
+                        <h3 style="margin-bottom: 8px;">7. Expected Type</h3>
+                        <p style="color: #4a5568;">Ensures the actual value returned
+                            from API matches the expected data type.</p>
+                        <pre
+                                style="white-space: pre-wrap; color: black; background: #f8fafc; padding: 10px;">
+Supported Types:
+string, number, boolean, array, object, null
+    </pre>
+                    </div>
+
+                </section>
+
+                <section id="path-cheat-sheet" class="content-block">
+                    <h2 class="block-title">
+                        <span class="block-icon"></span> JSON Path Cheat Sheet
+                    </h2>
+
+                    <p style="color: #4a5568; font-size: 15px; margin-bottom: 15px;">
+                        Use these simple rules to write correct JSON paths when creating
+                        checks. These 7 syntaxes cover 95% of all real test cases.</p>
+
+                    <div
+                            style="background: #f8fafc; border-left: 4px solid #667eea; padding: 18px 20px; border-radius: 8px; font-size: 14px; line-height: 1.6;">
+							<pre
+                                    style="margin: 0; color: black; background: none; padding: 0; white-space: pre-wrap;">
+
+1. $
+   → Refers to the entire JSON.
+
+2. a.b
+   → Go inside nested fields (like folders).
+     Example: user.profile
+
+3. $.field
+   → Field directly under root.
+     Example: $.status
+
+4. array[0]
+   → First item in a list/array.
+     Example: pages[0]
+
+5. a.b[0].c
+   → Nested object → array index → field.
+     Example: data.items[0].id
+
+6. [key=value]
+   → Find array item where a field matches.
+     Example: pages[displayName=Manager]
+
+7. [key="value"]
+   → Same as above but for text/string values.
+     Example: users[name="John Doe"]
+
+</pre>
+                    </div>
+
+                    <p style="margin-top: 10px; color: #4a5568; font-size: 14px;">
+                        💡 Master these basic patterns and you can create almost any test
+                        case path with confidence.</p>
+                </section>
+
+                <p style="margin-top: 20px; font-size: 16px; color: #2d3748;">
+                    Learn how to provide correct <strong>path values</strong>, follow
+                    predefined syntax, and understand examples clearly <a
+                        href="/assets/docs/Path Syntax Reference.pdf"
+                        style="color: #1a73e8; text-decoration: underline;"> Download
+                    Path Value Syntax Guide (PDF) </a>
+                </p>
+            </section>
+
+            <section id="multi-level" class="content-block">
+                <h3>Multi-level Test Organization</h3>
+
+                <p style="color: #4a5568;">
+                    A test case can <strong>depend on another test</strong>. Child
+                    runs only when Parent passes.
+                </p>
+
+                <ul class="step-list">
+                    <li>Multiple parents supported</li>
+                    <li>Used when later tests require values from earlier API
+                        calls
+                    </li>
+                </ul>
+
+                <h4 style="margin-top: 22px;">Requires Field</h4>
+                <p style="color: #4a5568;">Allows extracting values from the
+                    parent response for child execution.</p>
+
+                <pre
+                        style="background: #f8fafc; color: black; padding: 10px; border-radius: 6px; font-size: 14px;">
+Example:
+name: accessToken
+path: $.auth.token
+</pre>
+
+                <p style="margin-top: 8px; font-size: 15px;">
+                    If parent test fails or value not found → the child test is marked
+                    as <strong style="color: #d03e3e;">SKIPPED</strong>.
+                </p>
+            </section>
+
+            <section id="test-order" class="content-block">
+
+                <h3 style="margin-top: 35px; margin-bottom: 15px; color: #1a202c;">
+                    TestSuite & Testcase Ordering</h3>
+
+                <p style="color: #4a5568; font-size: 15px; line-height: 1.7;">
+                    You can organize test suites and test cases using a folder
+                    hierarchy:</p>
+
+                <ul class="step-list">
+                    <li><strong>Root Suite</strong> — top-level suite</li>
+                    <li><strong>Sub-Folder</strong> — divide suites into
+                        functional modules
+                    </li>
+                    <li><strong>Nested Levels</strong> supported inside folders</li>
+                </ul>
+
+                <div class="alert alert-info">
+                    Example:
+                    <code>Home / First Path / Devices</code>
+                </div>
+
+                <h4 style="margin-top: 22px;">Drag & Drop Ordering</h4>
+                <ul class="step-list">
+                    <li>Reorder Suites and Testcases by Drag and Drop</li>
+                    <li>Execution order follows the same order shown in UI</li>
+                </ul>
+
+                <div class="alert alert-warning">When reordered → positions
+                    are saved automatically and maintained in execution and results
+                </div>
+
+                <br>
+
+                <h3 style="margin-bottom: 15px; color: #1a202c;">
+            </section>
+
+
+            <section id="errors" class="content-block">
+                <h2 class="block-title">
+                    <span class="block-icon"></span> Common Errors and Solutions
+                </h2>
+
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th style="width: 35%;">Error Message</th>
+                        <th>Solution</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Invalid CSV</strong></td>
+                            <td>Check for missing column names or improperly formatted
+                                headers
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>No Test Selected</strong></td>
+                            <td>Select at least one test suite before clicking Run
+                                Tests
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Empty Result</strong></td>
+                            <td>CSV contains empty rows or missing required field
+                                values
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Authentication Failed</strong></td>
+                            <td>Cookie or X-ZCSRF-TOKEN expired - generate new
+                                credentials from browser
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Invalid Base URL</strong></td>
+                            <td>Use only supported base URLs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>No Valid Accounts</strong></td>
+                            <td>Cookie(s) Session expired (or) Required Validation testcase(Starred testcase) is not chosen</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="support" class="content-block">
+                <h2 class="block-title">
+                    <span class="block-icon"></span> Support and Contact
+                </h2>
+
+                <div class="card-grid">
+                    <div class="info-card">
+                        <h4>📧 Email Support</h4>
+                        <p>support@testiq.com</p>
+                        <p class="required">Response within 24 hours</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Report Issues</h4>
+                        <p>Found a bug? Report it to our support team for quick
+                            resolution</p>
+                        <p class="required">Include error details</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+</div>
+
+<div id="resultsSection" style="display: none;">
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Test Execution Results</h1>
+            <p>View and analyze all test run results</p>
+        </div>
+
+        <div class="filter-section">
+
+            <select id="filterSelect" class="filter-input">
+                <option value="">All Runs</option>
+                <option value="today">Today</option>
+                <option value="yesterday">Yesterday</option>
+                <option value="last7">Last 7 Days</option>
+                <option value="last30">Last 30 Days</option>
+            </select> <input type="date" class="filter-input" id="startDate"> <input
+                type="date" class="filter-input" id="endDate"> <select
+                id="sortSelect" class="filter-input">
+            <option value="desc">Newest First</option>
+            <option value="asc">Oldest First</option>
+        </select> <input type="text" class="filter-input" id="searchInput"
+                         placeholder="🔍Search by Run ID or Status">
+            <button id="resetFiltersBtn" class="reset-btn">Reset</button>
+
+        </div>
+
+        <table class="results-table" id="resultsTable">
+            <thead>
+            <tr>
+                <th style="width: 40px;"></th>
+                <th>Run ID</th>
+                <th>Start Time</th>
+                <th>Duration</th>
+                <th>Status</th>
+                <th>Pass Rate</th>
+                <th>Suites</th>
+                <th>Accounts</th>
+                <th>Test Cases</th>
+                <th>Actions</th>
+            </tr>
+
+            </thead>
+            <tbody id="resultsBody"></tbody>
+        </table>
+
+        <div id="noResults" class="no-results" style="display: none;">
+            <h3>No Results Found</h3>
+            <p>Execute some tests to see results here</p>
+        </div>
+    </div>
+</div>
+<script src="index.js"></script>
+</body>
+</html>
