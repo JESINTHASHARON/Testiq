@@ -8,4 +8,5 @@ public interface MessageRepository
         extends JpaRepository<Message, Long> {
 
     List<Message> findTop20ByConversationIdOrderByCreatedAtDesc(String conversationId);
+    List<Message> findByConversationId(String conversationId);
 }

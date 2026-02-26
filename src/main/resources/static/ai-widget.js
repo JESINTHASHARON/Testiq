@@ -17,19 +17,16 @@ const AI_RESPONSES = [
 
 let responseIdx = 0;
 
-function init() {
-  const saved = localStorage.getItem('testiq_ai_convs');
-  if (saved) {
-    try { conversations = JSON.parse(saved); } catch(e) { conversations = []; }
-  }
-  if (!conversations.length) {
-    createConversationObject('Welcome Chat', [
-      { role: 'ai', text: '👋 Hi! I\'m your Testiq AI assistant. Ask me anything about your test suites, checks, prechecks, or best practices!', time: now() }
-    ]);
-  }
-  activeConvId = conversations[0].id;
-  renderSidebar();
-  renderMessages();
+async function init() {
+    const response = await fetch("http://localhost:8080/conversation", {
+     			method: "GET",
+     			headers: { "Content-Type": "application/json" }
+     		});
+        conversations = await response.json();
+
+      activeConvId = conversations[0].id;
+      renderSidebar();
+      renderMessages();
 }
 
 function save() {
@@ -40,17 +37,14 @@ function now() {
   return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
-function createConversationObject(name, messages = []) {
-  const conv = { id: Date.now() + Math.random(), name, messages };
-  conversations.unshift(conv);
-  save();
-  return conv;
-}
 
-function createNewConversation() {
-  const conv = createConversationObject('New Chat', [
-    { role: 'ai', text: 'Hello! Start by asking me anything about Testiq or your test automation.', time: now() }
-  ]);
+async function createNewConversation() {
+      const response = await fetch("http://localhost:8080/conversation/new", {
+  			method: "POST",
+  			headers: { "Content-Type": "application/json" }
+  		});
+  		const conv = await response.json();
+
   activeConvId = conv.id;
   renderSidebar();
   renderMessages();
@@ -60,7 +54,7 @@ function switchConversation(id) {
   activeConvId = id;
   renderSidebar();
   renderMessages();
-  document.getElementById('current-conv-title').textContent = getActiveConv()?.name || 'Testiq AI';
+  document.getElementById('current-conv-title').textContent = getActiveConv()?.title || 'Testiq AI';
 }
 
 function getActiveConv() {
@@ -116,15 +110,14 @@ function startRename(id, el) {
 function renderSidebar() {
   const list = document.getElementById('conversations-list');
   list.innerHTML = '';
-
+  console.log(conversations);
   conversations.forEach(conv => {
     const li = document.createElement('div');
     li.className = 'conv-item' + (conv.id === activeConvId ? ' active' : '');
     li.dataset.id = conv.id;
-
     li.innerHTML = `
       <span class="conv-icon">💬</span>
-      <span class="conv-name">${escHtml(conv.name)}</span>
+      <span class="conv-name">${escHtml(conv.title)}</span>
       <div class="conv-actions">
         <button class="conv-action-btn" title="Rename" onclick="event.stopPropagation(); startRename(${conv.id}, this.closest('.conv-item'))">✎</button>
         <button class="conv-action-btn" title="Delete" onclick="event.stopPropagation(); deleteConversation(${conv.id})">🗑</button>
@@ -169,6 +162,12 @@ function renderMessages() {
   area.scrollTop = area.scrollHeight;
 }
 
+ function createConversationObject(name, messages = []) {
+ const conv = { id: Date.now() + Math.random(), name, messages };
+  conversations.unshift(conv);
+  save();
+  return conv;
+}
 function sendMessage() {
   const input = document.getElementById('chat-input');
   const text = input.value.trim();
@@ -189,7 +188,6 @@ function sendMessage() {
   renderMessages();
   renderSidebar();
 
-  // Show typing
   const area = document.getElementById('messages-area');
   const typingEl = document.createElement('div');
   typingEl.className = 'message-group ai';
@@ -200,7 +198,6 @@ function sendMessage() {
 
   document.getElementById('send-btn').disabled = true;
 
-  // Simulate AI response
   const delay = 900 + Math.random() * 800;
   setTimeout(() => {
     const typing = document.getElementById('typing-indicator');

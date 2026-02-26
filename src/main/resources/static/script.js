@@ -1183,7 +1183,6 @@ function renderExecutionBlocks(results) {
 
   const executionCount = results.filter(r => r.type === "EXECUTION").length;
 
-  // If only one execution → render normally (no boxes)
   if (executionCount <= 1) {
     return results
       .filter(r => r.type !== "EXECUTION")
@@ -1201,7 +1200,6 @@ function renderExecutionBlocks(results) {
       `).join("");
   }
 
-  // Multiple executions → group into blocks
   let html = "";
   let currentBlock = null;
 
@@ -1523,6 +1521,7 @@ async function showStaticTestJson(agent, testPath, testcaseId, testcaseName) {
 		);
 
 		if (!res.ok) throw new Error("Failed to fetch test JSON");
+
 
 		const data = await res.json();
 

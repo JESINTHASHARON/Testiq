@@ -65,7 +65,6 @@ public class TestSuiteController {
         return ResponseEntity.ok().build();
     }
 
-
     @GetMapping("/suites")
     public Map<String, Object> getAllSuites() {
         return service.getAllSuites();

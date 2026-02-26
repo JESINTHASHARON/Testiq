@@ -35,6 +35,9 @@ public class ChatService {
     @Autowired
     private AIService aiService;
 
+    public List<Message> getMessages(String conversationId){
+        return messageRepository.findByConversationId(conversationId);
+    }
     public String sendMessage(String conversationId, String userInput) throws Exception {
 
         Conversation conversation = conversationRepository.findById(conversationId)

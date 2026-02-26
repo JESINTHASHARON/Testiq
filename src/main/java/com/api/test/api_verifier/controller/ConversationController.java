@@ -4,6 +4,7 @@ import com.api.test.api_verifier.model.Conversation;
 import com.api.test.api_verifier.service.ConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.*;
 
 @RestController
 @RequestMapping("/conversation")
@@ -29,4 +30,13 @@ public class ConversationController {
         return "Conversation deleted";
     }
 
+    @GetMapping("/{conversationId}")
+    public Conversation getConversationById(@PathVariable String conversationId){
+        return conversationService.getConversationById(conversationId);
+    }
+
+    @GetMapping
+    public List<Conversation> getAllConversation(){
+        return conversationService.getAllConversation();
+    }
 }

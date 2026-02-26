@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ConversationService {
@@ -24,6 +25,15 @@ public class ConversationService {
         if(conv!=null){
             conversationRepository.delete(conv);
         }
+    }
+
+    public Conversation getConversationById(String conversationId){
+        Conversation conv=conversationRepository.findById(conversationId).orElse(null);
+        return conv;
+    }
+
+    public List<Conversation> getAllConversation(){
+        return conversationRepository.findAll();
     }
 
     public void updateTitle(String conversationId,String title){

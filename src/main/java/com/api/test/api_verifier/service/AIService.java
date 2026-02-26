@@ -706,13 +706,6 @@ public class AIService {
                             config
                     );
 
-//            if (response.functionCalls() != null &&
-//                    !response.functionCalls().isEmpty()) {
-//
-//                return response.functionCalls().get(0);
-//            }
-//
-//            return response.text();
             return response;
 
         } catch (Exception e) {
