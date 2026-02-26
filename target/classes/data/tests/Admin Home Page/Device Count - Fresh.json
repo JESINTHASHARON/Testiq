@@ -1,0 +1,17 @@
+{
+	"id": 101,
+	"name": "Device Count - Fresh",
+	"endpoint": "intelligence/api/addon",
+	"method": "GET",
+	"suite": "Admin Home Page",
+	"path": "Admin Home Page",
+	"checks": [
+		{
+			"type": "valueMatch",
+			"path": "totalDevicesCount",
+			"operator": "==",
+			"expected": 0
+		}
+	],
+	"precheck": "Zero Devices"
+}

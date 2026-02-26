@@ -1,0 +1,25 @@
+{
+	"id": 108,
+	"name": "Agent Install Message - Fresh",
+	"endpoint": "intelligence/dcapi/dcMessages/13001",
+	"method": "GET",
+	"suite": "DEX_Home",
+	"path": "DEX_Home",
+	"checks": [
+		{
+			"type": "fieldExistence",
+			"path": "messages[0].messageLinks[0].messageContent.messageAttributes.LINK_0.componentPayload.remoteOfficeData[0]",
+			"fields": [
+				"customerID",
+				"remoteOfficeName",
+				"remoteOfficeID"
+			]
+		},
+		{
+			"type": "valueMatch",
+			"path": "messages[0].messageLinks[0].messageContent.title",
+			"expected": "Agent Not Installed In Client Computers."
+		}
+	],
+	"precheck": "Zero Devices"
+}

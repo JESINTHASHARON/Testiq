@@ -1,0 +1,33 @@
+{
+	"id": 104,
+	"name": "All Devices View - AWD",
+	"suite": "Device",
+	"path": "Device",
+	"method": "POST",
+	"endpoint": "intelligence/EIAllDevicesView.ec?",
+	"checks": [
+		{
+			"type": "fieldExistence",
+			"path": "$",
+			"fields": [
+				"headers",
+				"data",
+				"TableModel"
+			]
+		},
+		{
+			"type": "fieldExistence",
+			"path": "data[0].cells[0].payload",
+			"fields": [
+				"resourceId"
+			]
+		}
+	],
+	"requires": [
+		{
+			"name": "resourceId",
+			"path": "data[0].cells[0].payload.resourceId"
+		}
+	],
+	"precheck": "Has Devices"
+}

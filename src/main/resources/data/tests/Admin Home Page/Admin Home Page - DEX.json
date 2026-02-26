@@ -1,0 +1,37 @@
+{
+	"id": 100,
+	"name": "Admin Home Page - DEX",
+	"endpoint": "emsapi/adminhomepage",
+	"method": "GET",
+	"expectedStatus": 200,
+	"suite": "Admin Home Page",
+	"path": "Admin Home Page",
+	"checks": [
+		{
+			"type": "keyPresence",
+			"path": "[name=globalSettings].pages[displayName=DEX Manager]"
+		},
+		{
+			"type": "fieldExistence",
+			"path": "$",
+			"fields": [
+				"name",
+				"displayName",
+				"icon",
+				"pages"
+			]
+		},
+		{
+			"type": "fieldExistence",
+			"path": "[name=globalSettings].pages",
+			"fields": [
+				"name",
+				"displayName"
+			],
+			"fieldAny": [
+				"route",
+				"url"
+			]
+		}
+	]
+}

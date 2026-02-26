@@ -9,19 +9,12 @@
     {
       "type": "fieldExistence",
       "path": "$",
-      "fields": [
-        "orders",
-        "total"
-      ]
+      "fields": ["orders", "total"]
     },
     {
       "type": "fieldExistence",
       "path": "orders[0]",
-      "fields": [
-        "orderId",
-        "item",
-        "price"
-      ]
+      "fields": ["orderId", "item", "price"]
     }
   ],
   "requires": [

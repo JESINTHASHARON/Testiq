@@ -1,0 +1,20 @@
+{
+  "id" : 110,
+  "name" : "Filter - AWD",
+  "endpoint" : "intelligence/emsapi/liteFilters?pageID=13001&viewID=13001",
+  "suite" : "DEX_Home",
+  "path" : "DEX_Home",
+  "checks" : [ {
+    "type" : "fieldExistence",
+    "path" : "branchOffice",
+    "fields" : [ "filterGroups" ]
+  } ],
+  "requires" : [ {
+    "name" : "key",
+    "path" : "branchOffice.filterGroups[0].values[0].key"
+  }, {
+    "name" : "insightId",
+    "path" : "$[*].insightId"
+  } ],
+  "precheck" : "Has Devices"
+}

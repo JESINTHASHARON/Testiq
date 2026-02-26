@@ -1,0 +1,43 @@
+{
+	"id": 105,
+	"name": "Meta Data - Common",
+	"suite": "Device",
+	"path": "Device",
+	"method": "GET",
+	"endpoint": "intelligence/api/common/meta",
+	"checks": [
+		{
+			"type": "fieldExistence",
+			"path": "$",
+			"fields": [
+				"rulesetId",
+				"lastVisitedTarget",
+				"extensionStatus",
+				"ziaChatBotStatus",
+				"lastVisitedProfileId",
+				"timelineEnabled",
+				"showOverviewIntro",
+				"initialDataPrepared",
+				"isDeploymentEnabled",
+				"isEIAgentInstalled"
+			]
+		},
+		{
+			"type": "fieldExistence",
+			"path": "lastVisitedTarget",
+			"fields": [
+				"customGroupId"
+			]
+		}
+	],
+	"requires": [
+		{
+			"name": "lastVisitedProfileId",
+			"path": "lastVisitedProfileId"
+		},
+		{
+			"name": "customGroupId",
+			"path": "lastVisitedTarget.customGroupId"
+		}
+	]
+}

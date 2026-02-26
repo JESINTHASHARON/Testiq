@@ -1322,6 +1322,7 @@ function showTestResultsFromBackend(suiteKey, isParent = false) {
               <th>Total</th>
               <th>Execution Time</th>
             </tr>
+            </tr>
           </thead>
           <tbody id="cookie-table-body"></tbody>
         </table>

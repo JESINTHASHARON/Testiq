@@ -1,0 +1,15 @@
+{
+	"id": 106,
+	"name": "View Scope Modified Info - Common",
+	"suite": "Device",
+	"path": "Device",
+	"method": "GET",
+	"endpoint": "intelligence/api/common/viewScopeModifiedInfo",
+	"checks": [
+		{
+			"type": "valueMatch",
+			"path": "content",
+			"value": ""
+		}
+	]
+}

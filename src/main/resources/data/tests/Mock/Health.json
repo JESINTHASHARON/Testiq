@@ -9,10 +9,7 @@
     {
       "type": "fieldExistence",
       "path": "$",
-      "fields": [
-        "status",
-        "service"
-      ]
+      "fields": ["status", "service"]
     },
     {
       "type": "valueMatch",

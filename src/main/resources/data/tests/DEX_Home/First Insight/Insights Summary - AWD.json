@@ -1,0 +1,34 @@
+{
+  "id" : 121,
+  "parentId" : 119,
+  "name" : "Insights Summary - AWD",
+  "endpoint" : "intelligence/api/insights/{insightId}/insightSummary?branchOffice=-1&cgFilter=-1",
+  "requires" : [ {
+    "name" : "insightId",
+    "path" : "insightId"
+  } ],
+  "suite" : "DEX_Home",
+  "path" : "DEX_Home/First Insight",
+  "checks" : [ {
+    "type" : "fieldExistence",
+    "path" : "$",
+    "fields" : [ "insight", "affectedDevices" ]
+  }, {
+    "type" : "valueMatch",
+    "path" : "isTroubleshootApplicable",
+    "logic" : "OR",
+    "operator" : "==",
+    "expectedType" : "boolean",
+    "expected" : [ true, false ]
+  }, {
+    "type" : "valueMatch",
+    "path" : "viewName",
+    "operator" : "==",
+    "logic" : "OR",
+    "expectedType" : "string",
+    "expected" : [ "EIDetailedEventInsightsView", "EIBootTimeInsightsView", "EIExtendedLogonTimeInsightsView" ]
+  } ],
+  "precheck" : "Has Devices",
+  "method" : "GET",
+  "expectedStatus" : 200
+}

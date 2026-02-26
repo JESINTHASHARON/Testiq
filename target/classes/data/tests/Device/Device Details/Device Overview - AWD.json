@@ -1,0 +1,40 @@
+{
+	"id": 107,
+	"name": "Device Overview - AWD",
+	"suite": "Device",
+	"path": "Device/Device Details",
+	"parentId": [
+		105,
+		104
+	],
+	"endpoint": "intelligence/api/score/device/profile/{lastVisitedProfileId}/{resourceId}",
+	"method": "GET",
+	"requires": [
+		{
+			"name": "resourceId"
+		},
+		{
+			"name": "lastVisitedProfileId"
+		}
+	],
+	"checks": [
+		{
+			"type": "fieldExistence",
+			"path": "$",
+			"fields": [
+				"baselineScore",
+				"experienceScore",
+				"os",
+				"osVersion",
+				"lastLogonUser",
+				"name",
+				"model",
+				"scoreHealth",
+				"lastUpdatedTime",
+				"type",
+				"platform"
+			]
+		}
+	],
+	"precheck": "Has Devices"
+}

@@ -208,7 +208,7 @@ body {
 }
 .form-group input:focus,
 .form-group textarea:focus {
-    border-color: #764ba2; 
+    border-color: #764ba2;
     box-shadow: 0 0 4px rgba(118, 75, 162, 0.4);
 }
 
@@ -679,10 +679,10 @@ pre {
 
 #parentListContainer label {
     display: grid;
-    grid-template-columns: 32px auto; 
+    grid-template-columns: 32px auto;
     align-items: center;
     gap: 10px;
-    
+
     width: 100%;
     padding: 12px 14px;
     margin-bottom: 8px;
@@ -690,7 +690,7 @@ pre {
     border: 1px solid #E0E4EA;
     border-radius: 10px;
     background: #F7FAFF;
-    
+
     cursor: pointer;
     transition: background .2s, border-color .2s;
 }
@@ -711,7 +711,7 @@ pre {
 }
 
 #requiresSection {
-    display: none; 
+    display: none;
     margin-top: 20px;
 }
 

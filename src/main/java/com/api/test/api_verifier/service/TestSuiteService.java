@@ -1,12 +1,14 @@
 package com.api.test.api_verifier.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.hc.core5.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
 import java.util.*;
 
 @Service
@@ -20,6 +22,37 @@ public class TestSuiteService {
 		if (!root.exists())
 			root.mkdirs();
 		return buildTree(root);
+	}
+
+	public ResponseEntity<?> updateOrder(String folder, Map<String,List<String>> body) {
+		List<String> orderList = body.get("order");
+		if (orderList == null || orderList.isEmpty()) {
+			return ResponseEntity.badRequest().body("Invalid order list");
+		}
+
+		try {
+			Path folderPath = Paths.get(BASE_PATH)
+					.resolve(folder.replace("/", File.separator))
+					.normalize();
+
+			if (!Files.exists(folderPath) || !Files.isDirectory(folderPath)) {
+				return ResponseEntity.status(HttpStatus.SC_NOT_FOUND)
+						.body("Folder not found: " + folderPath);
+			}
+
+			Path orderFilePath = folderPath.resolve("order.txt");
+
+			Files.write(orderFilePath,
+					orderList,
+					StandardCharsets.UTF_8,
+					StandardOpenOption.CREATE,
+					StandardOpenOption.TRUNCATE_EXISTING);
+
+			return ResponseEntity.ok("Order updated");
+		} catch (IOException e) {
+			return ResponseEntity.status(HttpStatus.SC_BAD_GATEWAY)
+					.body("Error updating order: " + e.getMessage());
+		}
 	}
 
 	private Map<String, Object> buildTree(File dir) {
@@ -104,7 +137,7 @@ public class TestSuiteService {
 
 		updateParentRequiresFromChild(content);
 
-		return "Created";
+		return "Testcase Created";
 	}
 
 	@SuppressWarnings("unchecked")
@@ -127,11 +160,11 @@ public class TestSuiteService {
 
 		updateParentRequiresFromChild(content);
 
-		return "Updated";
+		return "Testcase Updated";
 	}
 
 	public String deleteTest(String path) {
-		return new File(BASE_PATH + path).delete() ? "Deleted" : "Not Found";
+		return new File(BASE_PATH + path).delete() ? "Testcase Deleted" : "Not Found";
 	}
 
 	public String renameTest(String oldPath, String newName) {
@@ -143,7 +176,7 @@ public class TestSuiteService {
 			newName += ".json";
 
 		File newFile = new File(oldFile.getParent(), newName);
-		return oldFile.renameTo(newFile) ? "Renamed" : "Failed";
+		return oldFile.renameTo(newFile) ? "Testcase Renamed" : "Failed to rename testcase";
 	}
 
 	public String moveTest(String oldPath, String newPath) {
@@ -159,7 +192,7 @@ public class TestSuiteService {
 	}
 
 	public String createFolder(String path) {
-		return new File(BASE_PATH + path).mkdirs() ? "Folder Created" : "Already Exists";
+		return new File(BASE_PATH + path).mkdirs() ? "Suite Created" : "Already Exists";
 	}
 
 	public String renameFolder(String oldPath, String newName) {
@@ -168,7 +201,7 @@ public class TestSuiteService {
 			return "Folder Not Found";
 
 		File newFile = new File(oldFile.getParent(), newName);
-		return oldFile.renameTo(newFile) ? "Folder Renamed" : "Failed";
+		return oldFile.renameTo(newFile) ? "Suite Renamed" : "Failed to rename suite";
 	}
 
 	public String deleteFolder(String path) {
@@ -177,7 +210,7 @@ public class TestSuiteService {
 			return "Not Found";
 
 		deleteRecursive(dir);
-		return "Folder Deleted";
+		return "Suite Deleted";
 	}
 
 	private void deleteRecursive(File f) {
@@ -187,6 +220,7 @@ public class TestSuiteService {
 		f.delete();
 	}
 
+
 	private int generateNextTestId() {
 		File root = new File(BASE_PATH);
 		if (!root.exists()) {
@@ -195,6 +229,7 @@ public class TestSuiteService {
 		}
 		return findMaxIdInDir(root) + 1;
 	}
+
 
 	@SuppressWarnings("unchecked")
 	private int findMaxIdInDir(File dir) {
@@ -223,6 +258,32 @@ public class TestSuiteService {
 		return maxId;
 	}
 
+	public List<Map<String, Object>> listAllTestcasesMetadata() throws IOException {
+
+		List<Map<String, Object>> result = new ArrayList<>();
+
+		// Walk BASE_PATH recursively
+		Files.walk(Paths.get(BASE_PATH))
+				.filter(Files::isRegularFile)
+				.filter(path -> path.toString().endsWith(".json"))
+				.forEach(path -> {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						Map<String, Object> content =
+								mapper.readValue(path.toFile(), Map.class);
+
+						Map<String, Object> meta = Map.of(
+								"id", content.get("id"),
+								"name", content.get("name")
+						);
+
+						result.add(meta);
+
+					} catch (Exception ignored) {}
+				});
+
+		return result;
+	}
 	@SuppressWarnings("unchecked")
 	private void updateParentRequiresFromChild(Map<String, Object> childContent) {
 		if (childContent == null)

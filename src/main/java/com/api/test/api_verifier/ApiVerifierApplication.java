@@ -3,6 +3,8 @@ package com.api.test.api_verifier;
 import java.awt.Desktop;
 import java.net.URI;
 
+import com.google.genai.Client;
+import com.google.genai.types.GenerateContentResponse;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -1,0 +1,26 @@
+{
+	"id": 113,
+	"name": "Latest Experience - AWD",
+	"suite": "DEX_Home",
+	"path": "DEX_Home",
+	"parentId": 115,
+	"endpoint": "intelligence/api/score/{lastVisitedProfileId}/latestExperience",
+	"method": "GET",
+	"requires": [
+		{
+			"name": "lastVisitedProfileId"
+		}
+	],
+	"checks": [
+		{
+			"type": "fieldExistence",
+			"path": "$",
+			"fields": [
+				"score",
+				"health",
+				"baseLineScore"
+			]
+		}
+	],
+	"precheck": "Has Devices"
+}

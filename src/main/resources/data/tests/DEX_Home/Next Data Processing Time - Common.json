@@ -1,0 +1,15 @@
+{
+	"id": 118,
+	"name": "Next Data Processing Time - Common",
+	"endpoint": "intelligence/api/score/nextDataProcessTime",
+	"method": "GET",
+	"suite": "DEX_Home",
+	"path": "DEX_Home",
+	"checks": [
+		{
+			"type": "patternMatch",
+			"path": "nextDataProcessingTime",
+			"pattern": "^[A-Za-z]{3}\\s\\d{1,2},\\s\\d{4}\\s\\d{2}:\\d{2}\\s[AP]M$"
+		}
+	]
+}

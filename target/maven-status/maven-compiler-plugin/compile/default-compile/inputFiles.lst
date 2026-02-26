@@ -1,10 +1,12 @@
 C:\Users\jesintha-pt8059\Desktop\Testiq-SourceCode\api-verifier\src\main\java\com\api\test\api_verifier\ApiVerifierApplication.java
+C:\Users\jesintha-pt8059\Desktop\Testiq-SourceCode\api-verifier\src\main\java\com\api\test\api_verifier\controller\AiController.java
 C:\Users\jesintha-pt8059\Desktop\Testiq-SourceCode\api-verifier\src\main\java\com\api\test\api_verifier\controller\ResultController.java
 C:\Users\jesintha-pt8059\Desktop\Testiq-SourceCode\api-verifier\src\main\java\com\api\test\api_verifier\controller\TestController.java
 C:\Users\jesintha-pt8059\Desktop\Testiq-SourceCode\api-verifier\src\main\java\com\api\test\api_verifier\controller\TestSuiteController.java
 C:\Users\jesintha-pt8059\Desktop\Testiq-SourceCode\api-verifier\src\main\java\com\api\test\api_verifier\model\ApiResult.java
 C:\Users\jesintha-pt8059\Desktop\Testiq-SourceCode\api-verifier\src\main\java\com\api\test\api_verifier\service\ApiCaller.java
 C:\Users\jesintha-pt8059\Desktop\Testiq-SourceCode\api-verifier\src\main\java\com\api\test\api_verifier\service\CookieValidatorService.java
+C:\Users\jesintha-pt8059\Desktop\Testiq-SourceCode\api-verifier\src\main\java\com\api\test\api_verifier\service\GeminiService.java
 C:\Users\jesintha-pt8059\Desktop\Testiq-SourceCode\api-verifier\src\main\java\com\api\test\api_verifier\service\PrecheckInstaller.java
 C:\Users\jesintha-pt8059\Desktop\Testiq-SourceCode\api-verifier\src\main\java\com\api\test\api_verifier\service\ReportService.java
 C:\Users\jesintha-pt8059\Desktop\Testiq-SourceCode\api-verifier\src\main\java\com\api\test\api_verifier\service\ResultStorage.java

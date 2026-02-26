@@ -1,0 +1,26 @@
+{
+	"id": 102,
+	"name": "Device Count - AWD",
+	"endpoint": "intelligence/api/addon",
+	"method": "GET",
+	"suite": "Admin Home Page",
+	"path": "Admin Home Page",
+	"checks": [
+		{
+			"type": "fieldExistence",
+			"path": "$",
+			"fields": [
+				"totalDevicesCount",
+				"moduleStatus",
+				"eiManagedDevicesCount"
+			]
+		},
+		{
+			"type": "valueMatch",
+			"path": "totalDevicesCount",
+			"operator": ">",
+			"expected": "0"
+		}
+	],
+	"precheck": "Has Devices"
+}

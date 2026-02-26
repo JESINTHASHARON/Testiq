@@ -1,0 +1,26 @@
+{
+	"id": 116,
+	"name": "Meta API - Common",
+	"suite": "DEX_Home",
+	"path": "DEX_Home",
+	"method": "GET",
+	"endpoint": "intelligence/api/common/meta",
+	"checks": [
+		{
+			"type": "fieldExistence",
+			"path": "$",
+			"fields": [
+				"rulesetId",
+				"lastVisitedTarget",
+				"extensionStatus",
+				"ziaChatBotStatus",
+				"lastVisitedProfileId",
+				"timelineEnabled",
+				"showOverviewIntro",
+				"initialDataPrepared",
+				"isDeploymentEnabled",
+				"isEIAgentInstalled"
+			]
+		}
+	]
+}

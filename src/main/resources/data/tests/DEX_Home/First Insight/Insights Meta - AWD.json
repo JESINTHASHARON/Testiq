@@ -1,0 +1,23 @@
+{
+	"id": 120,
+	"parentId": 119,
+	"name": "Insights Meta - AWD",
+	"endpoint": "intelligence/api/insights/{insightId}/insightsMeta",
+	"requires": [
+		"insightId"
+	],
+	"suite": "DEX_Home",
+	"path": "DEX_Home/First Insight",
+	"checks": [
+		{
+			"type": "fieldExistence",
+			"path": "$",
+			"fields": [
+				"indicator",
+				"criteria",
+				"category"
+			]
+		}
+	],
+	"prechecks": "Has Devices"
+}

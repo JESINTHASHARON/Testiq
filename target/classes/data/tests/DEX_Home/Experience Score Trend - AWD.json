@@ -1,0 +1,50 @@
+{
+	"id": 111,
+	"name": "Experience Score Trend - AWD",
+	"suite": "DEX_Home",
+	"path": "DEX_Home",
+	"parentId": 115,
+	"endpoint": "intelligence/api/score/{lastVisitedProfileId}/experienceScoreTrend?branchOffice=-1&duration=7",
+	"method": "GET",
+	"requires": [
+		"lastVisitedProfileId"
+	],
+	"precheck": "Has Devices",
+	"checks": [
+		{
+			"type": "fieldExistence",
+			"path": "$",
+			"fields": [
+				"chartData"
+			]
+		},
+		{
+			"type": "fieldExistence",
+			"path": "chartData",
+			"fields": [
+				"seriesdata",
+				"metadata"
+			]
+		},
+		{
+			"type": "valueMatch",
+			"path": "chartData.metadata.columns[0].datatype",
+			"operator": "==",
+			"value": "time"
+		},
+		{
+			"type": "valueMatch",
+			"path": "chartData.metadata.columns[1].datatype",
+			"operator": "==",
+			"value": "numeric"
+		},
+		{
+			"type": "fieldExistence",
+			"path": "chartData.seriesdata.chartdata[*]",
+			"fields": [
+				"seriesname",
+				"data"
+			]
+		}
+	]
+}

@@ -1,0 +1,21 @@
+{
+	"id": 114,
+	"name": "Left Pane - Common",
+	"endpoint": "intelligence/api/common/v2/left-pane",
+	"method": "GET",
+	"suite": "DEX_Home",
+	"path": "DEX_Home",
+	"checks": [
+		{
+			"type": "fieldExistence",
+			"path": "[0].pages",
+			"fields": [
+				"name"
+			]
+		},
+		{
+			"type": "keyPresence",
+			"path": "$[0].pages[name=overview]"
+		}
+	]
+}

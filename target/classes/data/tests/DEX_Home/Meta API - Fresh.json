@@ -1,0 +1,32 @@
+{
+  "id" : 117,
+  "name" : "Meta API - Fresh",
+  "endpoint" : "intelligence/api/common/meta",
+  "method" : "GET",
+  "headers" : {
+    "Accept" : "application/intelligenceMeta.v1+json"
+  },
+  "suite" : "DEX_Home",
+  "path" : "DEX_Home",
+  "checks" : [ {
+    "type" : "patternMatch",
+    "path" : "rulesetId",
+    "pattern" : "^[0-9]{1,6}0[0-9]{11}$"
+  }, {
+    "type" : "valueMatch",
+    "path" : "initialDataPrepared",
+    "expected" : false
+  }, {
+    "type" : "valueMatch",
+    "path" : "isEIAgentInstalled",
+    "expected" : false
+  }, {
+    "type" : "fieldExistence",
+    "path" : "$",
+    "fields" : [ "rulesetId", "lastVisitedTarget", "extensionStatus" ]
+  } ],
+  "precheck" : "Zero Devices",
+  "expectedStatus" : 200,
+  "requires" : [ ],
+  "parentId" : null
+}

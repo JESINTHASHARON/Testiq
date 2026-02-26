@@ -1,0 +1,23 @@
+{
+  "id" : 119,
+  "parentId" : 110,
+  "name" : "Overview Insight - AWD",
+  "endpoint" : "intelligence/api/overview/overViewInsight?branchOffice={key}",
+  "suite" : "DEX_Home",
+  "path" : "DEX_Home",
+  "checks" : [ {
+    "type" : "fieldExistence",
+    "path" : "$",
+    "fields" : [ "indicator", "affectedDeviceCount", "insightDisplayName", "indicatorKey", "insightId" ]
+  } ],
+  "requires" : [ {
+    "name" : "key",
+    "path" : "key"
+  }, {
+    "name" : "insightId",
+    "path" : "$[*].insightId"
+  } ],
+  "precheck" : "Has Devices",
+  "method" : "GET",
+  "expectedStatus" : 200
+}

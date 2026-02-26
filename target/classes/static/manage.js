@@ -1182,6 +1182,7 @@ function addCheck() {
 	if (errorBox) {
 		errorBox.style.display = "none";
 		errorBox.textContent = "";
+		errorBox.textContent = "";
 	}
 	const getVal = id => {
 		const el = document.getElementById(id);
@@ -1244,7 +1245,7 @@ function addCheck() {
 }
 
 function renderAddedChecks() {
-	const list = document.getElementById("addedChecksList");
+	const list =   document.getElementById("addedChecksList");
 
 	if (!collectedChecks || !collectedChecks.length) {
 		list.innerHTML = `<div style="color:#a0aec0">No checks added</div>`;
@@ -1449,6 +1450,7 @@ document.getElementById('testcaseForm').addEventListener('submit', async (e) => 
 			path = `${folderPath}/${fileName}`;
 			methodHttp = 'POST';
 		}
+
 
 		const res = await fetch(`/api/tests/test?path=${encodeURIComponent(path)}`, {
 			method: methodHttp,

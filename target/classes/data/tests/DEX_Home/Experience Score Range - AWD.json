@@ -1,0 +1,24 @@
+{
+	"id": 109,
+	"name": "Experience Score Range - AWD",
+	"endpoint": "intelligence/api/score/{lastVisitedProfileId}/experienceScoreRange?branchOffice=-1",
+	"parentId": 115,
+	"suite": "DEX_Home",
+	"path": "DEX_Home",
+	"checks": [
+		{
+			"type": "fieldExistence",
+			"path": "deviceRange",
+			"fields": [
+				"good",
+				"average",
+				"poor",
+				"unknown"
+			]
+		}
+	],
+	"requires": [
+		"lastVisitedProfileId"
+	],
+	"precheck": "Has Devices"
+}
